@@ -21,10 +21,10 @@ do
       if [ "$status" -eq 0 ]; then
         echo "Update Success: $output"
         lastupld="$(busybox date +%s)"
-        echo "$output" >> $logfile
+        echo "$(date +%m/%d,%T) $output" >> $logfile
       else
         echo "Update Failed: $output"
-        echo "$output" >> $errfile
+        echo "$(date +%m/%d,%T) $output" >> $errfile
       fi
     else
       echo "waiting for cooldown: $(expr "$(busybox date +%s)" - "$lastupld") sec"
