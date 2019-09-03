@@ -1,5 +1,5 @@
 #!/bin/sh
-domain="home.sivilization.com"
+domain="example.com"
 testmsg="TestMsg:TE5T_server_a1ive"
 portnum=5566
 cooldown=300
