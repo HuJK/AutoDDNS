@@ -1,3 +1,8 @@
+function
+==
+
+Listen \$port and try to connect to \$domain:\$port. If failed, t will try to wget \$url to update your dns/
+
 varaibles
 ==
 variable name|explain
