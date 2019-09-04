@@ -1,9 +1,9 @@
-function
+Function
 ==
 
 Listen \$port and connect to \$domain:\$port. If failed, it will try to wget \$url to update your dns.
 
-varaibles
+Varaibles
 ==
 variable name|explain
 -------------|-------------
@@ -14,7 +14,7 @@ url          |your ddns update url
 logfile      |logfile
 errfile      |error logfile
 
-feature
+Feature
 ==
 
 1. check connectivity every second
