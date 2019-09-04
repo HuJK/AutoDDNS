@@ -1,7 +1,7 @@
 function
 ==
 
-Listen \$port and connect to \$domain:\$port. If failed, it will try to wget \$url to update your dns
+Listen \$port and connect to \$domain:\$port. If failed, it will try to wget \$url to update your dns.
 
 varaibles
 ==
