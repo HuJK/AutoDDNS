@@ -10,14 +10,14 @@ lastupld=0
 
 while true
 do
-  sleep 1
-  if [ "$( (sleep 1; echo $testmsg | busybox nc -w 5 $domain $portnum) | busybox nc -w 5 -l -p $portnum )" = $testmsg ]; then
+  busybox sleep 1
+  if [ "$( (busybox sleep 1; echo $testmsg | busybox nc -w 5 $domain $portnum) | busybox nc -w 5 -l -p $portnum )" = $testmsg ]; then
     #echo "Test pass"
-    true
+    busybox true
   else
     printf  "Test not pass, "
     if [ "$(expr "$(busybox date +%s)" - "$lastupld")" -gt "$cooldown" ]; then
-      output=$(wget -t 10 --no-check-certificate -qO - "$url" )
+      output=$(busybox wget -t 10 --no-check-certificate -qO - "$url" )
       status=$?
       if [ "$status" -eq 0 ]; then
         echo "Update Success: $output"
