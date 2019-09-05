@@ -20,3 +20,14 @@ Feature
 1. check connectivity every second
 2. cooldown after request success to wait dns update
 3. available under buxybox only enveriment
+
+Requirement
+==
+
+1. Busybox compiled with 
+```make
+CONFIG_NC_SERVER=y
+CONFIG_FEATURE_WGET_TIMEOUT=y
+CONFIG_FEATURE_WGET_HTTPS=y
+```
+Option enabled
