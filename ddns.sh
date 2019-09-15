@@ -1,23 +1,46 @@
-#!/bin/sh
-domain="example.com"
+#!/bin/ash
+domain="home.sivilization.com"
 testmsg="TestMsg:TE5T_server_a1ive"
-portnum=5566
-cooldown=60
-url="https://freedns.afraid.org/dynamic/update.php?API_Key_here"
-logfile="/tmp/ddnslog"
-errfile="/tmp/ddnserr"
-lastupld=0
+url="https://freedns.afraid.org/dynamic/update.php?YourTokenHere"
+bzbox="/root/busybox-1.31.0/busybox"
+portnum=999
+cooldown=300
+logfile="/opt/var/log/ddnslog"
+errfile="/opt/var/log/ddnserr"
 
+
+test_bz_1o=$($bzbox nc -w 1 -l -p $portnum 2>&1)
+if test "${test_bz_1o#*Usage}" != "$test_bz_1o" ; then
+  echo "Error: Your busybox not compiled with CONFIG_NC_SERVER=y"
+  exit 1
+elif test "${test_bz_1o#*"Address already in use"}" != "$test_bz_1o" ; then
+  echo  "Error: $test_bz_1o"
+  exit 1
+fi
+
+test_wget_1o=$($bzbox wget -T 10 --no-check-certificate -qO - "https://google.com" 2>&1)
+test_wget_1s=$?
+if test "${test_wget_1o#*"not an http or ftp url"}" != "$test_wget_1o" ; then
+  echo  "Warning: Your busybox not compiled with CONFIG_FEATURE_WGET_HTTPS=y"
+fi
+
+    
+lastupld=0
+lastsucs=0
 while true
 do
-  busybox sleep 1
-  if [ "$( (busybox sleep 1; echo $testmsg | busybox nc -w 5 $domain $portnum) | busybox nc -w 5 -l -p $portnum )" = $testmsg ]; then
-    #echo "Test pass"
-    busybox true
+  $bzbox sleep 0.125
+  if [ "$( ($bzbox sleep 0.4 ;$bzbox echo $testmsg | $bzbox nc -w 1 $domain $portnum) | $bzbox nc -w 2 -l -p $portnum )" = $testmsg ]; then
+    true
+    if [ $lastsucs -ne 1 ]; then
+      echo "Test pass"
+      lastsucs=1
+    fi
   else
+    lastsucs=0
     printf  "Test not pass, "
     if [ "$(expr "$(busybox date +%s)" - "$lastupld")" -gt "$cooldown" ]; then
-      output=$(busybox wget -t 10 --no-check-certificate -qO - "$url" )
+      output=$($bzbox wget -t 10 --no-check-certificate -qO - "$url" )
       status=$?
       if [ "$status" -eq 0 ]; then
         echo "Update Success: $output"
