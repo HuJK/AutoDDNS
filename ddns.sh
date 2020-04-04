@@ -27,7 +27,7 @@ do
     true
     if [ $lastsucs -ne 1 ]; then
       echo "[$($bzbox date +%m/%d,%T)]: Test pass. Msg recv: $msg_recv" 
-      #lastsucs=1
+      lastsucs=1
     fi
   else
     lastsucs=0
@@ -48,4 +48,6 @@ do
     fi
   fi
 done
+
+
 
