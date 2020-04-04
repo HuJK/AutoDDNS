@@ -3,7 +3,7 @@
 bzbox="busybox"
 domain="example.com"
 testmsg="<h1>$($bzbox hostname) is live</h1>$($bzbox date)"
-url="https://freedns.afraid.org/dynamic/update.php?YOUR_KEY_ID"
+url="https://freedns.afraid.org/dynamic/update.php?YOUR_UPDATE_KEY"
 port=998
 cooldown=300
 logfile="/var/log/ddnslog"
